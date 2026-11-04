@@ -25,6 +25,7 @@ def complete(llm, messages, max_tokens=200, max_continues=3):
 
         messages.append({"role": "assistant", "content": response.text})
         if attempt + 1 < max_attempts:
+            # we won't request to continue in the last attempt
             messages.append({"role": "user", "content": CONTINUE_PROMPT})
-
+    # exited the for loop, means it reached the max attempt without returning
     return {"text": text, "status": "truncated"}
